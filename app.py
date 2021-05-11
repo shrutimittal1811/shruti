@@ -9,18 +9,27 @@ st.set_option('deprecation.showfileUploaderEncoding', False)
 pickle_in = open("ShrutiMittalPIET18CS170.pkl","rb")
 model=pickle.load(pickle_in)
 dataset= pd.read_csv('Classification Dataset1.csv')
+X = dataset.iloc[ : ,1:10].values
 
 
-X = dataset.iloc[:, 1:10].values
-
-#handling missing data (Replacing missing data with the constant value)  
+# Taking care of missing data
+#handling missing data (Replacing missing data with the mean value)  
 from sklearn.impute import SimpleImputer
-imputer = SimpleImputer(missing_values= np.NAN, strategy= 'constant', fill_value="Female", verbose=1, copy=True)
+imputer = SimpleImputer(missing_values= np.NAN, strategy= 'constant', fill_value='Female', verbose=1, copy=True)
 #Fitting imputer object to the independent variables x.   
 imputer = imputer.fit(X[:, 2:3]) 
-#Replacing missing data with the calculated constant value  
-X[:, 2:3]= imputer.transform(X[:,2:3]) 
+#Replacing missing data with the calculated mean value  
+X[:, 2:3]= imputer.transform(X[:, 2:3])  
 
+
+# Taking care of missing data
+#handling missing data (Replacing missing data with the mean value)  
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(missing_values= np.NAN, strategy= 'mean', fill_value=None, verbose=1, copy=True)
+#Fitting imputer object to the independent variables x.   
+imputer = imputer.fit(X[: , 3:9]) 
+#Replacing missing data with the calculated mean value  
+X[:, 3:9]= imputer.transform(X[:, 3:9])    
 
 # Encoding Categorical data:
 # Encoding the Independent Variable
@@ -30,7 +39,7 @@ X[:, 2] = labelencoder_X.fit_transform(X[:, 2])
 
 # Encoding Categorical data:
 # Encoding the Independent Variable
-
+from sklearn.preprocessing import LabelEncoder
 labelencoder_X = LabelEncoder()
 X[:, 1] = labelencoder_X.fit_transform(X[:, 1])
 
@@ -40,15 +49,15 @@ sc = StandardScaler()
 X = sc.fit_transform(X)
 
 
-def predict_note_authentication(CreditScore,Geography,Gender,Age, Tenure, Balance, HasCrCard, IsActiveMembe ,EstimatedSalary):
-  output= model.predict(sc.transform([[CreditScore,Geography,Gender,Age, Tenure, Balance, HasCrCard, IsActiveMembe ,EstimatedSalary]]))
-  print("modal is predicted ",output)
+def predict_note_authentication(CreditScore,Geography,Gender,Age,Tenure,Balance,HasCrCard,IsActiveMember,EstimatedSalary):
+  output= model.predict(sc.transform([[CreditScore,Geography,Gender,Age,Tenure,Balance,HasCrCard,IsActiveMember,EstimatedSalary]]))
+  print("Heart Disease Category is",output)
   if output==[0]:
-    prediction="Customer will leave"
+    prediction="Naïve Bayes Classifier predict new customer will leave the bank "
    
 
   if output==[1]:
-    prediction="Customer will not leave"
+    prediction="Naïve Bayes Classifier predict new customer will NOT leave the bank "
     
     
   print(prediction)
@@ -61,32 +70,31 @@ def main():
    <div class="col-md-12">
    <center><p style="font-size:40px;color:white;margin-top:10px;">Poornima Institute of Engineering & Technology</p></center> 
    <center><p style="font-size:30px;color:white;margin-top:10px;">Department of Computer Engineering</p></center> 
-   <center><p style="font-size:20px;color:white;margin-top:10px;">MID TERM 1 pactice by PIET18CS170 Shruti Mittal</p></center> 
+   <center><p style="font-size:20px;color:white;margin-top:10px;">MID TERM 1 pactice by PIET18CS170</p></center> 
    </div>
    </div>
    </div>
    """
     st.markdown(html_temp,unsafe_allow_html=True)
-    st.header("SVM modal is predicted whether the customer will leave or not")
-    CreditScore = st.number_input('Enter Credit Score',0,900)
-    Geography = st.number_input('Insert country 0 for Spain and 1 for France',0,1)
+    st.header("Predict new customer will leave the bank or not usnig  SVM")
+    CreditScore = st.number_input('Enter  Credit Score',300,1000)
+    Geography = st.number_input('Insert Geography 0 for France and 1 for Spain',0,1)
     Gender = st.number_input('Insert gender 0 for male and 1 for female',0,1)
-    Age = st.number_input('Enter Age',18,100)
-    Tenure = st.number_input('Enter Tenure ',0,10)
-    Balance = st.number_input('Enter Balance ')
-    HasCrCard = st.number_input('Enter 0 if no Credit card 1 if have Credit card ',0,1)
-    IsActiveMembe= st.number_input('Enter 0 if not member 1 if member ',0,1)
-    EstimatedSalary=st.number_input('Enter EstimatedSalary')
+    Age = st.number_input('Insert a Age',18,80)
+    Tenure = st.number_input('Insert a Tenure',0,9)
+    Balance = st.number_input('Enter your account balance')
+    HasCrCard= st.number_input('Inster hasCard or not 1 for yes 0 for no ',0,1)
+    IsActiveMember= st.number_input('Insert a member is active or not 1 for yes 0 for no',0,1)
+    EstimatedSalary  = st.number_input('Enter estimated salary ',0,10000000)
    
     
     resul=""
     if st.button("Predict"):
-      result=predict_note_authentication(CreditScore,Geography,Gender,Age, Tenure, Balance, HasCrCard, IsActiveMembe ,EstimatedSalary)
+      result=predict_note_authentication(CreditScore,Geography,Gender,Age,Tenure,Balance,HasCrCard,IsActiveMember,EstimatedSalary)
       st.success('Model has predicted {}'.format(result))
     if st.button("About"):
-      st.subheader("Developed by Shruti Mittal 1st mid term ")
+      st.subheader("Developed by Shruti Mittal 1st Mid-Term ")
       st.subheader("C-Section,PIET")
 
 if __name__=='__main__':
   main()
-   
