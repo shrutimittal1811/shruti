@@ -76,7 +76,7 @@ def main():
    </div>
    """
     st.markdown(html_temp,unsafe_allow_html=True)
-    st.header("Predict new customer will leave the bank or not usnig  SVM ")
+    st.header("Predict new customer will leave the bank or not using  SVM ")
     CreditScore = st.number_input('Enter  Credit Score',300,1000)
     Geography = st.number_input('Insert Geography 0 for France and 1 for Spain',0,1)
     Gender = st.number_input('Insert gender 0 for Male and 1 for Female',0,1)
