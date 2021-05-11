@@ -53,11 +53,11 @@ def predict_note_authentication(CreditScore,Geography,Gender,Age,Tenure,Balance,
   output= model.predict(sc.transform([[CreditScore,Geography,Gender,Age,Tenure,Balance,HasCrCard,IsActiveMember,EstimatedSalary]]))
   print("Heart Disease Category is",output)
   if output==[0]:
-    prediction="Naïve Bayes Classifier predict new customer will leave the bank "
+    prediction="SVM Predict that new customer will leave the bank "
    
 
   if output==[1]:
-    prediction="Naïve Bayes Classifier predict new customer will NOT leave the bank "
+    prediction="SVM Predict that new customer will not leave the bank "
     
     
   print(prediction)
