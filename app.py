@@ -65,24 +65,24 @@ def predict_note_authentication(CreditScore,Geography,Gender,Age,Tenure,Balance,
 def main():
     
     html_temp = """
-   <div class="" style="background-color:red;" >
+   <div class="" style="background-color:blue;" >
    <div class="clearfix">           
    <div class="col-md-12">
    <center><p style="font-size:40px;color:white;margin-top:10px;">Poornima Institute of Engineering & Technology</p></center> 
    <center><p style="font-size:30px;color:white;margin-top:10px;">Department of Computer Engineering</p></center> 
-   <center><p style="font-size:20px;color:white;margin-top:10px;">MID TERM 1 pactice by PIET18CS170</p></center> 
+   <center><p style="font-size:20px;color:white;margin-top:10px;">MID TERM 1 Practical by PIET18CS170</p></center> 
    </div>
    </div>
    </div>
    """
     st.markdown(html_temp,unsafe_allow_html=True)
-    st.header("predict new customer will leave the bank or not usnig  SVM ")
-    CreditScore = st.number_input('Enter  Cradit Score',300,1000)
+    st.header("Predict new customer will leave the bank or not usnig  SVM ")
+    CreditScore = st.number_input('Enter  Credit Score',300,1000)
     Geography = st.number_input('Insert Geography 0 for France and 1 for Spain',0,1)
-    Gender = st.number_input('Insert gender 0 for male and 1 for female',0,1)
+    Gender = st.number_input('Insert gender 0 for Male and 1 for Female',0,1)
     Age = st.number_input('Insert a Age',18,80)
-    Tenure = st.number_input('Insert a Tanure',0,9)
-    Balance = st.number_input('Enter your account balance')
+    Tenure = st.number_input('Insert a Tenure',0,9)
+    Balance = st.number_input('Enter your Account Balance')
     HasCrCard= st.number_input('Inster hasCard or not 1 for yes 0 for no ',0,1)
     IsActiveMember= st.number_input('Insert a member is active or not 1 for yes 0 for no',0,1)
     EstimatedSalary  = st.number_input('Enter Estimated salary ',0,10000000)
@@ -93,7 +93,7 @@ def main():
       result=predict_note_authentication(CreditScore,Geography,Gender,Age,Tenure,Balance,HasCrCard,IsActiveMember,EstimatedSalary)
       st.success('Model has predicted {}'.format(result))
     if st.button("About"):
-      st.subheader("Developed by Shruti Mittal 1st Mid Term ")
+      st.subheader("Developed by Shruti Mittal 1st Mid-Term ")
       st.subheader("C-Section,PIET")
 
 if __name__=='__main__':
